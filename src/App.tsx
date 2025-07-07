@@ -92,16 +92,6 @@ const subjects = [
   },
 ]
 
-const team = [
-  {
-    name: 'Lucian Gutfraynd',
-    title: 'Owner/Tutor',
-    description:
-      "Lucian is a high school student enrolled in all honors courses, maintaining straight A’s (4.0 unweighted GPA, 5.0/5.0 weighted GPA). He is passionate about helping kids succeed academically and has extensive experience working with children. Lucian tailors his tutoring approach to each student’s unique learning style, with the goal of making learning both enjoyable and effective. He is committed to helping students build confidence and reach their academic goals.",
-    // You can add a photo URL here if you want
-  },
-]
-
 export default function App() {
   const [showBanner, setShowBanner] = useState(true)
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
@@ -135,9 +125,14 @@ export default function App() {
     { label: 'Mission', href: '#mission' },
     { label: 'Services', href: '#services' },
     { label: 'Subjects', href: '#subjects' },
-    { label: 'Meet Our Team', href: '#team' },
     { label: 'Contact', href: '#contact' },
   ]
+
+  // Calculate dynamic padding for main content
+  const bannerHeight = showBanner ? 42 : 0; // Approx. height of banner (py-2.5 + text-sm line-height)
+  const headerHeight = 64; // Approx. height of header (py-4 + h-8 logo)
+  const totalOffset = bannerHeight + headerHeight;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-slate-900 to-black text-white">
       {/* Sticky Header Container */}
@@ -194,310 +189,294 @@ export default function App() {
           </nav>
         </div>
       )}
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4">
-        <div className="container mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto"
-          >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
-              Empowering Education Through Personalized 1:1 Tutoring, Tailored Just for You.
-            </h1>
-          </motion.div>
-        </div>
-      </section>
-      {/* Mission Section */}
-      <section id="mission" className="py-20 px-4">
-        <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Our Mission
-            </h2>
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-              <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-6">
-                At Eduvance Tutors, we are dedicated to providing exceptional tutoring services for students in grades 1–9. Our mission is to help young learners achieve academic success through personalized support, engaging lessons, and a positive learning environment. With a team of experienced educators, we strive to make a meaningful difference in every child’s educational journey.
+
+      {/* Main content wrapper to push content below fixed/sticky elements */}
+      <div style={{ paddingTop: `${totalOffset}px` }}>
+        {/* Hero Section */}
+        <section className="pb-20 px-4">
+          <div className="container mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="max-w-4xl mx-auto"
+            >
+              <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
+                Empowering Education Through Personalized 1:1 Tutoring, Tailored Just for You.
+              </h1>
+            </motion.div>
+          </div>
+        </section>
+        {/* Mission Section */}
+        <section id="mission" className="py-20 px-4">
+          <div className="container mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="max-w-4xl mx-auto text-center"
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Our Mission
+              </h2>
+              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+                <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-6">
+                  At Eduvance Tutors, we are dedicated to providing exceptional tutoring services for students in grades 1–9. Our mission is to help young learners achieve academic success through personalized support, engaging lessons, and a positive learning environment. With a team of experienced educators, we strive to make a meaningful difference in every child’s educational journey.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+        {/* Services Section */}
+        <section id="services" className="py-20 px-4">
+          <div className="container mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Our Services
+              </h2>
+              <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+                Choose the perfect learning solution tailored to your needs and goals
               </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-      {/* Services Section */}
-      <section id="services" className="py-20 px-4">
-        <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Our Services
-            </h2>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Choose the perfect learning solution tailored to your needs and goals
-            </p>
-          </motion.div>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {services.map((service, index) => (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                className={`relative ${service.highlight ? 'md:-translate-y-8' : ''}`}
-              >
-                <Card className={`relative overflow-hidden bg-gradient-to-br ${service.highlight ? 'from-purple-500/20 to-pink-500/20 border-purple-500/50 shadow-2xl shadow-purple-500/25' : 'from-blue-500/20 to-purple-500/20 border-blue-500/30'} backdrop-blur-sm border-2 h-full`}>
-                  {service.badge && (
-                    <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-center py-2 text-sm font-semibold">
-                      {service.badge}
-                    </div>
-                  )}
-                  <CardHeader className={`text-center ${service.highlight ? 'pt-12' : ''}`}>
-                    <CardTitle className="text-2xl font-bold text-white mb-2">{service.title}</CardTitle>
-                    <div className="text-3xl font-bold text-white mb-2">{service.price}</div>
-                    <CardDescription className="text-gray-300 mb-4">{service.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <ul className="space-y-3">
-                      {service.features.map((feature, featureIndex) => (
-                        <li key={featureIndex} className="flex items-center text-gray-300">
-                          <Check className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    {service.button.link ? (
-                      <a href={service.button.link} target="_blank" rel="noopener noreferrer">
+            </motion.div>
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {services.map((service, index) => (
+                <motion.div
+                  key={service.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: index * 0.2 }}
+                  className={`relative ${service.highlight ? 'md:-translate-y-8' : ''}`}
+                >
+                  <Card className={`relative overflow-hidden bg-gradient-to-br ${service.highlight ? 'from-purple-500/20 to-pink-500/20 border-purple-500/50 shadow-2xl shadow-purple-500/25' : 'from-blue-500/20 to-purple-500/20 border-blue-500/30'} backdrop-blur-sm border-2 h-full`}>
+                    {service.badge && (
+                      <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-center py-2 text-sm font-semibold">
+                        {service.badge}
+                      </div>
+                    )}
+                    <CardHeader className={`text-center ${service.highlight ? 'pt-12' : ''}`}>
+                      <CardTitle className="text-2xl font-bold text-white mb-2">{service.title}</CardTitle>
+                      <div className="text-3xl font-bold text-white mb-2">{service.price}</div>
+                      <CardDescription className="text-gray-300 mb-4">{service.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <ul className="space-y-3">
+                        {service.features.map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-center text-gray-300">
+                            <Check className="h-5 w-5 text-green-400 mr-3 flex-shrink-0" />
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      {service.button.link ? (
+                        <a href={service.button.link} target="_blank" rel="noopener noreferrer">
+                          <Button className="w-full mt-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
+                            {service.button.label}
+                          </Button>
+                        </a>
+                      ) : (
                         <Button className="w-full mt-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
                           {service.button.label}
                         </Button>
-                      </a>
-                    ) : (
-                      <Button className="w-full mt-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
-                        {service.button.label}
+                      )}
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+            <div className="text-center mt-6">
+              <span className="text-gray-400 text-sm md:text-base">*Please See Subjects Offered Below</span>
+            </div>
+          </div>
+        </section>
+        {/* Subjects Section */}
+        <section id="subjects" className="py-20 px-4">
+          <div className="container mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Subjects We Offer
+              </h2>
+            </motion.div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {subjects.slice(0, 4).map((subject, index) => (
+                <motion.div
+                  key={subject.name}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ scale: 1.05 }}
+                  className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-purple-400/50 transition-all duration-300 cursor-pointer group"
+                >
+                  <h3 className={`text-xl font-semibold text-white mb-2 ${subject.color}`}>{subject.name}</h3>
+                  <p className="text-gray-400 text-sm md:text-base">{subject.description}</p>
+                </motion.div>
+              ))}
+            </div>
+            {/* Center Spanish card below */}
+            <div className="flex justify-center mt-8">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                whileHover={{ scale: 1.05 }}
+                className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-purple-400/50 transition-all duration-300 cursor-pointer group w-full max-w-md"
+              >
+                <h3 className="text-xl font-semibold text-white mb-2 text-pink-500">Spanish</h3>
+                <p className="text-gray-400 text-sm md:text-base">{subjects[4].description}</p>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+        {/* Contact Section */}
+        <section id="contact" className="py-20 px-4">
+          <div className="container mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
+            >
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Get In Touch
+              </h2>
+              <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+                Ready to start your learning journey? Contact us today for a free consultation
+              </p>
+            </motion.div>
+            <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+              {/* Contact Form */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
+                  <CardHeader>
+                    <CardTitle className="text-2xl font-bold text-white">Send us a message</CardTitle>
+                    <CardDescription className="text-gray-300">
+                      We'll get back to you within 24 hours
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="name" className="text-gray-300">Full Name</Label>
+                          <Input
+                            id="name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+                            placeholder="Your name"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="email" className="text-gray-300">Email</Label>
+                          <Input
+                            id="email"
+                            name="email"
+                            type="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+                            placeholder="your@email.com"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <Label htmlFor="phone" className="text-gray-300">Phone Number</Label>
+                        <Input
+                          id="phone"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
+                          placeholder="Your phone number"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="message" className="text-gray-300">Message</Label>
+                        <Textarea
+                          id="message"
+                          name="message"
+                          value={formData.message}
+                          onChange={handleChange}
+                          className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 h-32"
+                          placeholder="Tell us about your learning goals..."
+                          required
+                        />
+                      </div>
+                      <Button type="submit" className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
+                        Send Message
                       </Button>
-                    )}
+                    </form>
                   </CardContent>
                 </Card>
               </motion.div>
-            ))}
-          </div>
-          <div className="text-center mt-6">
-            <span className="text-gray-400 text-sm md:text-base">*Please See Subjects Offered Below</span>
-          </div>
-        </div>
-      </section>
-      {/* Subjects Section */}
-      <section id="subjects" className="py-20 px-4">
-        <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Subjects We Offer
-            </h2>
-          </motion.div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {subjects.slice(0, 4).map((subject, index) => (
+              {/* Contact Info & Newsletter */}
               <motion.div
-                key={subject.name}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-                className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-purple-400/50 transition-all duration-300 cursor-pointer group"
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                className="space-y-8"
               >
-                <h3 className={`text-xl font-semibold text-white mb-2 ${subject.color}`}>{subject.name}</h3>
-                <p className="text-gray-400 text-sm md:text-base">{subject.description}</p>
+                <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
+                  <CardHeader>
+                    <CardTitle className="text-2xl font-bold text-white">Contact Information</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex items-center space-x-3">
+                      <Mail className="h-5 w-5 text-purple-400" />
+                      <a href="mailto:eduvancetutors@gmail.com" className="text-gray-300 hover:text-purple-400 transition-colors">eduvancetutors@gmail.com</a>
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <Phone className="h-5 w-5 text-purple-400" />
+                      <a href="tel:+12243000855" className="text-gray-300 hover:text-purple-400 transition-colors">+1 224-300-0855</a>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
+                  <CardHeader>
+                    <CardTitle className="text-2xl font-bold text-white">Newsletter Subscription</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div className="flex justify-center">
+                        <iframe width="540" height="305" src="https://300c1986.sibforms.com/serve/MUIFAFQ1vOjaikgyomwPUxoSH-o4VQyWVfT_ogG64FBaAPSEr2Nz9l86pCTkcNrlSm88G2-AAGDwKPHx3ZQ88RMOz_KYkYIMhoVg1bxH9b09GOjOqDwYRJY8QCYAy7DcLxSzt8Iqj6BU6LsTqsr-kjCT2l1_PWXRt37SiFV46oLmfyL1Tzs9DZcf2uBan2FPrNjgfBTqpvTu9_dw" frameBorder="0" scrolling="auto" allowFullScreen style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', maxWidth: '100%' }}></iframe>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </motion.div>
-            ))}
-          </div>
-          {/* Center Spanish card below */}
-          <div className="flex justify-center mt-8">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              whileHover={{ scale: 1.05 }}
-              className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-purple-400/50 transition-all duration-300 cursor-pointer group w-full max-w-md"
-            >
-              <h3 className="text-xl font-semibold text-white mb-2 text-pink-500">Spanish</h3>
-              <p className="text-gray-400 text-sm md:text-base">{subjects[4].description}</p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-      {/* Meet Our Team Section */}
-      <section id="team" className="py-20 px-4">
-        <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl mx-auto text-center"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Meet Our Team
-            </h2>
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
-              <h3 className="text-2xl font-bold text-white mb-2">Lucian Gutfraynd</h3>
-              <p className="text-purple-300 font-semibold mb-2">Owner/Tutor</p>
-              <p className="text-gray-300 text-base md:text-lg leading-relaxed">Lucian is a high school student enrolled in all honors courses, maintaining straight A’s (4.0 unweighted GPA, 5.0/5.0 weighted GPA). He is passionate about helping kids succeed academically and has extensive experience working with children. Lucian tailors his tutoring approach to each student’s unique learning style, with the goal of making learning both enjoyable and effective. He is committed to helping students build confidence and reach their academic goals.</p>
             </div>
-          </motion.div>
-        </div>
-      </section>
-      {/* Contact Section */}
-      <section id="contact" className="py-20 px-4">
-        <div className="container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Get In Touch
-            </h2>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Ready to start your learning journey? Contact us today for a free consultation
-            </p>
-          </motion.div>
-          <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {/* Contact Form */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold text-white">Send us a message</CardTitle>
-                  <CardDescription className="text-gray-300">
-                    We'll get back to you within 24 hours
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="name" className="text-gray-300">Full Name</Label>
-                        <Input
-                          id="name"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
-                          placeholder="Your name"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="email" className="text-gray-300">Email</Label>
-                        <Input
-                          id="email"
-                          name="email"
-                          type="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
-                          placeholder="your@email.com"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <Label htmlFor="phone" className="text-gray-300">Phone Number</Label>
-                      <Input
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
-                        placeholder="Your phone number"
-                        required
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="message" className="text-gray-300">Message</Label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        value={formData.message}
-                        onChange={handleChange}
-                        className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 h-32"
-                        placeholder="Tell us about your learning goals..."
-                        required
-                      />
-                    </div>
-                    <Button type="submit" className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
-                      Send Message
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
-            </motion.div>
-            {/* Contact Info & Newsletter */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              className="space-y-8"
-            >
-              <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold text-white">Contact Information</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <Mail className="h-5 w-5 text-purple-400" />
-                    <a href="mailto:eduvancetutors@gmail.com" className="text-gray-300 hover:text-purple-400 transition-colors">eduvancetutors@gmail.com</a>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <Phone className="h-5 w-5 text-purple-400" />
-                    <a href="tel:+12243000855" className="text-gray-300 hover:text-purple-400 transition-colors">+1 224-300-0855</a>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
-                <CardHeader>
-                  <CardTitle className="text-2xl font-bold text-white">Newsletter Subscription</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex justify-center">
-                      <iframe width="540" height="305" src="https://300c1986.sibforms.com/serve/MUIFAFQ1vOjaikgyomwPUxoSH-o4VQyWVfT_ogG64FBaAPSEr2Nz9l86pCTkcNrlSm88G2-AAGDwKPHx3ZQ88RMOz_KYkYIMhoVg1bxH9b09GOjOqDwYRJY8QCYAy7DcLxSzt8Iqj6BU6LsTqsr-kjCT2l1_PWXRt37SiFV46oLmfyL1Tzs9DZcf2uBan2FPrNjgfBTqpvTu9_dw" frameBorder="0" scrolling="auto" allowFullScreen style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', maxWidth: '100%' }}></iframe>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
           </div>
-        </div>
-      </section>
-      {/* Footer */}
-      <footer className="bg-black/20 backdrop-blur-sm border-t border-white/10 py-12 px-4">
-        <div className="container mx-auto text-center">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <img src="/eduvance-tutors-logo.png" alt="Eduvance Tutors Logo" className="h-8 w-auto" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Eduvance Tutors
-            </span>
+        </section>
+        {/* Footer */}
+        <footer className="bg-black/20 backdrop-blur-sm border-t border-white/10 py-12 px-4">
+          <div className="container mx-auto text-center">
+            <div className="flex items-center justify-center space-x-2 mb-4">
+              <img src="/eduvance-tutors-logo.png" alt="Eduvance Tutors Logo" className="h-8 w-auto" />
+              <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Eduvance Tutors
+              </span>
+            </div>
+            <p className="text-gray-400">2025 Eduvance Tutors. All rights reserved.</p>
           </div>
-          <p className="text-gray-400">2025 Eduvance Tutors. All rights reserved.</p>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
   )
 }
