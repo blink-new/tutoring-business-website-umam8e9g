@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { GraduationCap, Mail, Phone, X, Menu, Check } from 'lucide-react'
+
+import { Mail, Phone, X, Menu, Check } from 'lucide-react'
 
 const services = [
   {
@@ -91,22 +92,15 @@ const subjects = [
   },
 ]
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault()
-  // Send email using Blink notifications
-  try {
-    await window.blink.notifications.email({
-      to: 'eduvancetutors@gmail.com',
-      subject: 'New Contact Form Submission',
-      html: `<div><b>Name:</b> ${formData.name}<br/><b>Email:</b> ${formData.email}<br/><b>Phone:</b> ${formData.phone}<br/><b>Message:</b> ${formData.message}</div>`,
-      text: `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nMessage: ${formData.message}`,
-    })
-    alert('Thank you for reaching out! We will get back to you soon.')
-    setFormData({ name: '', email: '', phone: '', message: '' })
-  } catch {
-    alert('There was an error sending your message. Please try again later.')
-  }
-}
+const team = [
+  {
+    name: 'Lucian Gutfraynd',
+    title: 'Owner/Tutor',
+    description:
+      "Lucian is a high school student enrolled in all honors courses, maintaining straight A’s (4.0 unweighted GPA, 5.0/5.0 weighted GPA). He is passionate about helping kids succeed academically and has extensive experience working with children. Lucian tailors his tutoring approach to each student’s unique learning style, with the goal of making learning both enjoyable and effective. He is committed to helping students build confidence and reach their academic goals.",
+    // You can add a photo URL here if you want
+  },
+]
 
 export default function App() {
   const [showBanner, setShowBanner] = useState(true)
@@ -117,6 +111,22 @@ export default function App() {
     phone: '',
     message: '',
   })
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    // Send email using Blink notifications
+    try {
+      await window.blink.notifications.email({
+        to: 'eduvancetutors@gmail.com',
+        subject: 'New Contact Form Submission',
+        html: `<div><b>Name:</b> ${formData.name}<br/><b>Email:</b> ${formData.email}<br/><b>Phone:</b> ${formData.phone}<br/><b>Message:</b> ${formData.message}</div>`,
+        text: `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nMessage: ${formData.message}`,
+      })
+      alert('Thank you for reaching out! We will get back to you soon.')
+      setFormData({ name: '', email: '', phone: '', message: '' })
+    } catch {
+      alert('There was an error sending your message. Please try again later.')
+    }
+  }
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
@@ -130,59 +140,62 @@ export default function App() {
   ]
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-slate-900 to-black text-white">
-      {/* Promo Banner */}
-      {showBanner && (
-        <div className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-center py-2.5 px-4 text-sm flex items-center justify-center">
-          <span>Save $10 on your first session with code <strong className="font-bold">FIRSTSESSION</strong></span>
-          <button onClick={() => setShowBanner(false)} className="absolute right-4 top-1/2 -translate-y-1/2">
-            <X className="h-5 w-5" />
-          </button>
-        </div>
-      )}
-      {/* Header */}
-      <header className={`sticky w-full bg-black/30 backdrop-blur-lg border-b border-white/10 z-40 ${showBanner ? 'mt-[42px]' : ''}`}>
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <GraduationCap className="h-8 w-8 text-purple-400" />
-            <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Eduvance Tutors
-            </span>
-          </div>
-          {/* Desktop nav */}
-          <nav className="hidden md:flex space-x-8">
-            {navLinks.map(link => (
-              <a key={link.href} href={link.href} className="text-gray-300 hover:text-purple-400 transition-colors">{link.label}</a>
-            ))}
-          </nav>
-          {/* Mobile hamburger */}
-          <button className="md:hidden p-2" onClick={() => setMobileNavOpen(true)} aria-label="Open menu">
-            <Menu className="h-7 w-7 text-purple-400" />
-          </button>
-        </div>
-        {/* Mobile sidebar nav */}
-        {mobileNavOpen && (
-          <div className="fixed inset-0 z-50 bg-black/80 flex flex-col">
-            <div className="flex items-center justify-between px-4 py-4 border-b border-white/10 bg-black/90">
-              <div className="flex items-center space-x-2">
-                <GraduationCap className="h-7 w-7 text-purple-400" />
-                <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  Eduvance Tutors
-                </span>
-              </div>
-              <button onClick={() => setMobileNavOpen(false)} aria-label="Close menu">
-                <X className="h-7 w-7 text-white" />
-              </button>
-            </div>
-            <nav className="flex flex-col gap-6 px-8 py-8 text-lg">
-              {navLinks.map(link => (
-                <a key={link.href} href={link.href} className="text-gray-200 hover:text-purple-400 transition-colors" onClick={() => setMobileNavOpen(false)}>{link.label}</a>
-              ))}
-            </nav>
+      {/* Sticky Header Container */}
+      <div className="sticky top-0 z-50">
+        {/* Promo Banner */}
+        {showBanner && (
+          <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white text-center py-2.5 px-4 text-sm flex items-center justify-center">
+            <span>Save $10 on your first session with code <strong className="font-bold">FIRSTSESSION</strong></span>
+            <button onClick={() => setShowBanner(false)} className="absolute right-4 top-1/2 -translate-y-1/2">
+              <X className="h-5 w-5" />
+            </button>
           </div>
         )}
-      </header>
+        {/* Header */}
+        <header className="w-full bg-black/30 backdrop-blur-lg border-b border-white/10">
+          <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <img src="/eduvance-tutors-logo.png" alt="Eduvance Tutors Logo" className="h-8 w-auto" />
+              <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Eduvance Tutors
+              </span>
+            </div>
+            {/* Desktop nav */}
+            <nav className="hidden md:flex space-x-8">
+              {navLinks.map(link => (
+                <a key={link.href} href={link.href} className="text-gray-300 hover:text-purple-400 transition-colors">{link.label}</a>
+              ))}
+            </nav>
+            {/* Mobile hamburger */}
+            <button className="md:hidden p-2" onClick={() => setMobileNavOpen(true)} aria-label="Open menu">
+              <Menu className="h-7 w-7 text-purple-400" />
+            </button>
+          </div>
+        </header>
+      </div>
+      {/* Mobile sidebar nav */}
+      {mobileNavOpen && (
+        <div className="fixed inset-0 z-[100] bg-black/95 flex flex-col">
+          <div className="flex items-center justify-between px-4 py-4 border-b border-white/10 bg-black/90">
+            <div className="flex items-center space-x-2">
+              <img src="/eduvance-tutors-logo.png" alt="Eduvance Tutors Logo" className="h-7 w-auto" />
+              <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Eduvance Tutors
+              </span>
+            </div>
+            <button onClick={() => setMobileNavOpen(false)} aria-label="Close menu">
+              <X className="h-7 w-7 text-white" />
+            </button>
+          </div>
+          <nav className="flex flex-col gap-6 px-8 py-8 text-lg">
+            {navLinks.map(link => (
+              <a key={link.href} href={link.href} className="text-gray-200 hover:text-purple-400 transition-colors" onClick={() => setMobileNavOpen(false)}>{link.label}</a>
+            ))}
+          </nav>
+        </div>
+      )}
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4">
+      <section className="pt-24 pb-20 px-4">
         <div className="container mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -326,6 +339,25 @@ export default function App() {
         </div>
       </section>
       {/* Meet Our Team Section */}
+      <section id="team" className="py-20 px-4">
+        <div className="container mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-3xl mx-auto text-center"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              Meet Our Team
+            </h2>
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+              <h3 className="text-2xl font-bold text-white mb-2">Lucian Gutfraynd</h3>
+              <p className="text-purple-300 font-semibold mb-2">Owner/Tutor</p>
+              <p className="text-gray-300 text-base md:text-lg leading-relaxed">Lucian is a high school student enrolled in all honors courses, maintaining straight A’s (4.0 unweighted GPA, 5.0/5.0 weighted GPA). He is passionate about helping kids succeed academically and has extensive experience working with children. Lucian tailors his tutoring approach to each student’s unique learning style, with the goal of making learning both enjoyable and effective. He is committed to helping students build confidence and reach their academic goals.</p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
       {/* Contact Section */}
       <section id="contact" className="py-20 px-4">
         <div className="container mx-auto">
@@ -430,11 +462,11 @@ export default function App() {
                 <CardContent className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <Mail className="h-5 w-5 text-purple-400" />
-                    <span className="text-gray-300">eduvancetutors@gmail.com</span>
+                    <a href="mailto:eduvancetutors@gmail.com" className="text-gray-300 hover:text-purple-400 transition-colors">eduvancetutors@gmail.com</a>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Phone className="h-5 w-5 text-purple-400" />
-                    <span className="text-gray-300">+1 224-300-0855</span>
+                    <a href="tel:+12243000855" className="text-gray-300 hover:text-purple-400 transition-colors">+1 224-300-0855</a>
                   </div>
                 </CardContent>
               </Card>
@@ -445,7 +477,7 @@ export default function App() {
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex justify-center">
-                      <iframe width="540" height="305" src="https://300c1986.sibforms.com/serve/MUIFAFQ1vOjaikgyomwPUxoSH-o4VQyWVfT_ogG64FBaAPSEr2Nz9l86pCTkcNrlSm88G2-AAGDwKPHx3ZQ88RMOz_KYkYIMhoVg1bxH9b09GOkOqDwYRJY8QCYAy7DcLxSzt8Iqj6BU6LsTqsr-kjCT2l1_PWXRt37SiFV46oLmfyL1Tzs9DZcf2uBan2FPrNjgfBTqpvTu9_dw" frameBorder="0" scrolling="auto" allowFullScreen style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', maxWidth: '100%' }}></iframe>
+                      <iframe width="540" height="305" src="https://300c1986.sibforms.com/serve/MUIFAFQ1vOjaikgyomwPUxoSH-o4VQyWVfT_ogG64FBaAPSEr2Nz9l86pCTkcNrlSm88G2-AAGDwKPHx3ZQ88RMOz_KYkYIMhoVg1bxH9b09GOjOqDwYRJY8QCYAy7DcLxSzt8Iqj6BU6LsTqsr-kjCT2l1_PWXRt37SiFV46oLmfyL1Tzs9DZcf2uBan2FPrNjgfBTqpvTu9_dw" frameBorder="0" scrolling="auto" allowFullScreen style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', maxWidth: '100%' }}></iframe>
                     </div>
                   </div>
                 </CardContent>
@@ -458,7 +490,7 @@ export default function App() {
       <footer className="bg-black/20 backdrop-blur-sm border-t border-white/10 py-12 px-4">
         <div className="container mx-auto text-center">
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <GraduationCap className="h-8 w-8 text-purple-400" />
+            <img src="/eduvance-tutors-logo.png" alt="Eduvance Tutors Logo" className="h-8 w-auto" />
             <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
               Eduvance Tutors
             </span>
