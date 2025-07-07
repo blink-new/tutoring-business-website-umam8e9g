@@ -5,119 +5,184 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { GraduationCap, Mail, Phone, X, Menu, Check } from 'lucide-react'
 
-import { 
-  GraduationCap, 
-  BookOpen, 
-  Brain, 
-  Award, 
-  Users, 
-  Calculator, 
-  Globe, 
-  Mail,
-  Phone,
-  MapPin,
-  Check,
-  X
-} from 'lucide-react'
+const services = [
+  {
+    title: '30 Minute Tutoring Session',
+    price: '$25/session',
+    description: 'A 30-minute, 1-on-1 private tutoring session for students in 1st grade and above.',
+    features: [
+      'One-on-one session',
+      'Homework help',
+      'Test preparation',
+      'Project work',
+      'Tailored to each individual student',
+      'Multiple subjects offered*',
+    ],
+    button: { label: 'Book Now', link: undefined },
+    highlight: false,
+    badge: undefined,
+  },
+  {
+    title: '1-Hour Tutoring Session',
+    price: '$40 / session',
+    description: 'A 1-hour, 1-on-1 private tutoring session for students in 1st grade and above.',
+    features: [
+      'One-on-one session',
+      'Homework help',
+      'Test preparation',
+      'Project work',
+      'Tailored to each individual student',
+      'Multiple subjects offered*',
+    ],
+    button: { label: 'Book Now', link: 'https://eduvancetutors.neetocal.com/1hour' },
+    highlight: true,
+    badge: 'Best Deal',
+  },
+  {
+    title: '45-Minute Tutoring Session',
+    price: '$35 / session',
+    description: 'A 45-minute, 1-on-1 private tutoring session for students in 1st grade and above',
+    features: [
+      'One-on-one session',
+      'Homework help',
+      'Test preparation',
+      'Project work',
+      'Tailored to each individual student',
+      'Multiple subjects offered*',
+    ],
+    button: { label: 'Book Now', link: undefined },
+    highlight: false,
+    badge: undefined,
+  },
+]
 
-function App() {
+const subjects = [
+  {
+    name: 'Mathematics',
+    description:
+      'Enrich foundational concepts, prepare for exams, and strengthen problem-solving skills across all levels of 1st–11th grade math—including Algebra I & II, Geometry, and Trigonometry. Get support with homework, test prep, or overall subject comprehension.',
+    color: 'text-blue-500',
+  },
+  {
+    name: 'Science',
+    description:
+      'Explore Biology, Chemistry, Physics, and more while building a strong understanding of how the world works through the scientific method. Sessions can focus on homework, research papers, lab reports, test prep, or general comprehension.',
+    color: 'text-green-500',
+  },
+  {
+    name: 'English',
+    description:
+      'Enhance reading comprehension, vocabulary, grammar and both argumentative and creative writing skills. Sessions can address specific reading or writing assignments or support overall mastery of the subject.',
+    color: 'text-purple-500',
+  },
+  {
+    name: 'History',
+    description:
+      'Build confidence and understanding of historical topics and critical thinking. Sessions can include help with study guides, test prep, homework, or writing assignments such as DBQs, essays, or creative responses. Improve overall comprehension and written communication within historical contexts.',
+    color: 'text-orange-500',
+  },
+  {
+    name: 'Spanish',
+    description:
+      'Strengthen speaking, listening, reading, and writing skills in Spanish. Each session is tailored to your needs, promoting consistent progress and real-world language confidence. Focus on homework, grammar, conversational skills, or overall language development.',
+    color: 'text-pink-500',
+  },
+]
+
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault()
+  // Send email using Blink notifications
+  try {
+    await window.blink.notifications.email({
+      to: 'eduvancetutors@gmail.com',
+      subject: 'New Contact Form Submission',
+      html: `<div><b>Name:</b> ${formData.name}<br/><b>Email:</b> ${formData.email}<br/><b>Phone:</b> ${formData.phone}<br/><b>Message:</b> ${formData.message}</div>`,
+      text: `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nMessage: ${formData.message}`,
+    })
+    alert('Thank you for reaching out! We will get back to you soon.')
+    setFormData({ name: '', email: '', phone: '', message: '' })
+  } catch {
+    alert('There was an error sending your message. Please try again later.')
+  }
+}
+
+export default function App() {
   const [showBanner, setShowBanner] = useState(true)
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
-    message: ''
+    message: '',
   })
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission here
-    console.log('Form submitted:', formData)
-  }
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }))
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
-
-  const services = [
-    {
-      title: "Standard Tutoring",
-      price: "$45/hour",
-      description: "Individual sessions focused on specific subjects",
-      features: ["One-on-one sessions", "Homework help", "Test preparation", "Progress tracking"],
-      gradient: "from-blue-500/20 to-purple-500/20",
-      border: "border-blue-500/30",
-      icon: BookOpen
-    },
-    {
-      title: "Premium Mentoring",
-      price: "$85/hour",
-      description: "Comprehensive academic guidance and career coaching",
-      features: ["All Standard features", "College prep assistance", "Study strategy development", "Monthly progress reports", "Parent consultations"],
-      gradient: "from-purple-500/20 to-pink-500/20",
-      border: "border-purple-500/50",
-      icon: Award,
-      highlight: true
-    },
-    {
-      title: "Group Sessions",
-      price: "$30/hour",
-      description: "Small group learning with peer collaboration",
-      features: ["Small groups (2-4 students)", "Collaborative learning", "Interactive exercises", "Shared resources"],
-      gradient: "from-green-500/20 to-blue-500/20",
-      border: "border-green-500/30",
-      icon: Users
-    }
+  // Responsive nav links
+  const navLinks = [
+    { label: 'Mission', href: '#mission' },
+    { label: 'Services', href: '#services' },
+    { label: 'Subjects', href: '#subjects' },
+    { label: 'Meet Our Team', href: '#team' },
+    { label: 'Contact', href: '#contact' },
   ]
-
-  const subjects = [
-    { name: "Mathematics", icon: Calculator, color: "text-blue-500" },
-    { name: "Science", icon: Brain, color: "text-green-500" },
-    { name: "English", icon: BookOpen, color: "text-purple-500" },
-    { name: "History", icon: Globe, color: "text-orange-500" },
-    { name: "Languages", icon: Globe, color: "text-pink-500" },
-    { name: "Computer Science", icon: Brain, color: "text-cyan-500" }
-  ]
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-slate-900 to-black text-white">
       {/* Promo Banner */}
       {showBanner && (
-        <div className="sticky top-0 z-50 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-center py-2.5 px-4 text-sm">
+        <div className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-center py-2.5 px-4 text-sm flex items-center justify-center">
           <span>Save $10 on your first session with code <strong className="font-bold">FIRSTSESSION</strong></span>
-          <button onClick={() => setShowBanner(false)} className="absolute top-1/2 right-4 -translate-y-1/2">
+          <button onClick={() => setShowBanner(false)} className="absolute right-4 top-1/2 -translate-y-1/2">
             <X className="h-5 w-5" />
           </button>
         </div>
       )}
-
       {/* Header */}
-      <header className="sticky top-0 w-full bg-black/30 backdrop-blur-lg border-b border-white/10 z-40">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <GraduationCap className="h-8 w-8 text-purple-400" />
-              <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Eduvance Tutors
-              </span>
-            </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="#mission" className="text-gray-300 hover:text-purple-400 transition-colors">Mission</a>
-              <a href="#services" className="text-gray-300 hover:text-purple-400 transition-colors">Services</a>
-              <a href="#subjects" className="text-gray-300 hover:text-purple-400 transition-colors">Subjects</a>
-              <a href="#contact" className="text-gray-300 hover:text-purple-400 transition-colors">Contact</a>
-            </nav>
-            <div className="w-24"></div> {/* Placeholder to balance the header */}
+      <header className={`sticky w-full bg-black/30 backdrop-blur-lg border-b border-white/10 z-40 ${showBanner ? 'mt-[42px]' : ''}`}>
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <GraduationCap className="h-8 w-8 text-purple-400" />
+            <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              Eduvance Tutors
+            </span>
           </div>
+          {/* Desktop nav */}
+          <nav className="hidden md:flex space-x-8">
+            {navLinks.map(link => (
+              <a key={link.href} href={link.href} className="text-gray-300 hover:text-purple-400 transition-colors">{link.label}</a>
+            ))}
+          </nav>
+          {/* Mobile hamburger */}
+          <button className="md:hidden p-2" onClick={() => setMobileNavOpen(true)} aria-label="Open menu">
+            <Menu className="h-7 w-7 text-purple-400" />
+          </button>
         </div>
+        {/* Mobile sidebar nav */}
+        {mobileNavOpen && (
+          <div className="fixed inset-0 z-50 bg-black/80 flex flex-col">
+            <div className="flex items-center justify-between px-4 py-4 border-b border-white/10 bg-black/90">
+              <div className="flex items-center space-x-2">
+                <GraduationCap className="h-7 w-7 text-purple-400" />
+                <span className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  Eduvance Tutors
+                </span>
+              </div>
+              <button onClick={() => setMobileNavOpen(false)} aria-label="Close menu">
+                <X className="h-7 w-7 text-white" />
+              </button>
+            </div>
+            <nav className="flex flex-col gap-6 px-8 py-8 text-lg">
+              {navLinks.map(link => (
+                <a key={link.href} href={link.href} className="text-gray-200 hover:text-purple-400 transition-colors" onClick={() => setMobileNavOpen(false)}>{link.label}</a>
+              ))}
+            </nav>
+          </div>
+        )}
       </header>
-
       {/* Hero Section */}
-      <section className="pt-24 pb-20 px-4">
+      <section className="pt-32 pb-20 px-4">
         <div className="container mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -126,14 +191,11 @@ function App() {
             className="max-w-4xl mx-auto"
           >
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
-              Empower Education Through Private, 1:1 Tutoring, Tailored Just For You
+              Empowering Education Through Personalized 1:1 Tutoring, Tailored Just for You.
             </h1>
-            {/* Removed: Unlock your potential with personalized tutoring that adapts to your unique learning style */}
-            {/* Removed: Start Learning Today and Learn More buttons */}
           </motion.div>
         </div>
       </section>
-
       {/* Mission Section */}
       <section id="mission" className="py-20 px-4">
         <div className="container mx-auto">
@@ -148,13 +210,12 @@ function App() {
             </h2>
             <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
               <p className="text-lg md:text-xl text-gray-300 leading-relaxed mb-6">
-                At Eduvance Tutors, we are dedicated to providing exceptional tutoring services for students in grades K-9. Our mission is to assist young learners in achieving academic success by offering personalized support, engaging lessons, and a positive learning environment. With our team of experienced educators, we strive to make a difference in every child's educational journey.
+                At Eduvance Tutors, we are dedicated to providing exceptional tutoring services for students in grades 1–9. Our mission is to help young learners achieve academic success through personalized support, engaging lessons, and a positive learning environment. With a team of experienced educators, we strive to make a meaningful difference in every child’s educational journey.
               </p>
             </div>
           </motion.div>
         </div>
       </section>
-
       {/* Services Section */}
       <section id="services" className="py-20 px-4">
         <div className="container mx-auto">
@@ -171,7 +232,6 @@ function App() {
               Choose the perfect learning solution tailored to your needs and goals
             </p>
           </motion.div>
-
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {services.map((service, index) => (
               <motion.div
@@ -181,19 +241,16 @@ function App() {
                 transition={{ duration: 0.8, delay: index * 0.2 }}
                 className={`relative ${service.highlight ? 'md:-translate-y-8' : ''}`}
               >
-                <Card className={`relative overflow-hidden bg-gradient-to-br ${service.gradient} backdrop-blur-sm border-2 ${service.border} h-full ${service.highlight ? 'shadow-2xl shadow-purple-500/25' : ''}`}>
-                  {service.highlight && (
+                <Card className={`relative overflow-hidden bg-gradient-to-br ${service.highlight ? 'from-purple-500/20 to-pink-500/20 border-purple-500/50 shadow-2xl shadow-purple-500/25' : 'from-blue-500/20 to-purple-500/20 border-blue-500/30'} backdrop-blur-sm border-2 h-full`}>
+                  {service.badge && (
                     <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-center py-2 text-sm font-semibold">
-                      MOST POPULAR
+                      {service.badge}
                     </div>
                   )}
                   <CardHeader className={`text-center ${service.highlight ? 'pt-12' : ''}`}>
-                    <div className="mx-auto mb-4 p-3 rounded-full bg-white/10 w-fit">
-                      <service.icon className="h-8 w-8 text-white" />
-                    </div>
                     <CardTitle className="text-2xl font-bold text-white mb-2">{service.title}</CardTitle>
                     <div className="text-3xl font-bold text-white mb-2">{service.price}</div>
-                    <CardDescription className="text-gray-300">{service.description}</CardDescription>
+                    <CardDescription className="text-gray-300 mb-4">{service.description}</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <ul className="space-y-3">
@@ -204,22 +261,27 @@ function App() {
                         </li>
                       ))}
                     </ul>
-                    <Button 
-                      className={`w-full mt-6 ${service.highlight 
-                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600' 
-                        : 'bg-white/10 hover:bg-white/20 border border-white/20'
-                      }`}
-                    >
-                      Choose {service.title}
-                    </Button>
+                    {service.button.link ? (
+                      <a href={service.button.link} target="_blank" rel="noopener noreferrer">
+                        <Button className="w-full mt-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
+                          {service.button.label}
+                        </Button>
+                      </a>
+                    ) : (
+                      <Button className="w-full mt-6 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
+                        {service.button.label}
+                      </Button>
+                    )}
                   </CardContent>
                 </Card>
               </motion.div>
             ))}
           </div>
+          <div className="text-center mt-6">
+            <span className="text-gray-400 text-sm md:text-base">*Please See Subjects Offered Below</span>
+          </div>
         </div>
       </section>
-
       {/* Subjects Section */}
       <section id="subjects" className="py-20 px-4">
         <div className="container mx-auto">
@@ -232,13 +294,9 @@ function App() {
             <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
               Subjects We Offer
             </h2>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-              Master any subject with our comprehensive tutoring programs
-            </p>
           </motion.div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            {subjects.map((subject, index) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {subjects.slice(0, 4).map((subject, index) => (
               <motion.div
                 key={subject.name}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -247,21 +305,27 @@ function App() {
                 whileHover={{ scale: 1.05 }}
                 className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-purple-400/50 transition-all duration-300 cursor-pointer group"
               >
-                <div className="flex items-center space-x-4">
-                  <div className={`p-3 rounded-full bg-white/10 group-hover:bg-white/20 transition-colors ${subject.color}`}>
-                    <subject.icon className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-white mb-1">{subject.name}</h3>
-                    <p className="text-gray-400">Expert guidance available</p>
-                  </div>
-                </div>
+                <h3 className={`text-xl font-semibold text-white mb-2 ${subject.color}`}>{subject.name}</h3>
+                <p className="text-gray-400 text-sm md:text-base">{subject.description}</p>
               </motion.div>
             ))}
           </div>
+          {/* Center Spanish card below */}
+          <div className="flex justify-center mt-8">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              whileHover={{ scale: 1.05 }}
+              className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-purple-400/50 transition-all duration-300 cursor-pointer group w-full max-w-md"
+            >
+              <h3 className="text-xl font-semibold text-white mb-2 text-pink-500">Spanish</h3>
+              <p className="text-gray-400 text-sm md:text-base">{subjects[4].description}</p>
+            </motion.div>
+          </div>
         </div>
       </section>
-
+      {/* Meet Our Team Section */}
       {/* Contact Section */}
       <section id="contact" className="py-20 px-4">
         <div className="container mx-auto">
@@ -278,7 +342,6 @@ function App() {
               Ready to start your learning journey? Contact us today for a free consultation
             </p>
           </motion.div>
-
           <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
             {/* Contact Form */}
             <motion.div
@@ -331,6 +394,7 @@ function App() {
                         onChange={handleChange}
                         className="bg-white/10 border-white/20 text-white placeholder:text-gray-400"
                         placeholder="Your phone number"
+                        required
                       />
                     </div>
                     <div>
@@ -352,7 +416,6 @@ function App() {
                 </CardContent>
               </Card>
             </motion.div>
-
             {/* Contact Info & Newsletter */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
@@ -367,40 +430,23 @@ function App() {
                 <CardContent className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <Mail className="h-5 w-5 text-purple-400" />
-                    <span className="text-gray-300">hello@eduvancetutors.com</span>
+                    <span className="text-gray-300">eduvancetutors@gmail.com</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <Phone className="h-5 w-5 text-purple-400" />
-                    <span className="text-gray-300">+1 (555) 123-4567</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <MapPin className="h-5 w-5 text-purple-400" />
-                    <span className="text-gray-300">123 Education St, Learning City, LC 12345</span>
+                    <span className="text-gray-300">+1 224-300-0855</span>
                   </div>
                 </CardContent>
               </Card>
-
               <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
                 <CardHeader>
                   <CardTitle className="text-2xl font-bold text-white">Newsletter Subscription</CardTitle>
-                  <CardDescription className="text-gray-300">
-                    Stay updated with learning tips and educational resources
-                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <p className="text-gray-300 text-sm">
-                      Subscribe to our newsletter for exclusive learning tips, study strategies, and updates on new programs.
-                    </p>
-                    <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
-                      <p className="text-yellow-300 text-sm">
-                        📧 <strong>Newsletter Integration:</strong> This is where you would embed your newsletter subscription code. 
-                        Replace this section with your email marketing platform's embed code (Mailchimp, ConvertKit, etc.).
-                      </p>
+                    <div className="flex justify-center">
+                      <iframe width="540" height="305" src="https://300c1986.sibforms.com/serve/MUIFAFQ1vOjaikgyomwPUxoSH-o4VQyWVfT_ogG64FBaAPSEr2Nz9l86pCTkcNrlSm88G2-AAGDwKPHx3ZQ88RMOz_KYkYIMhoVg1bxH9b09GOkOqDwYRJY8QCYAy7DcLxSzt8Iqj6BU6LsTqsr-kjCT2l1_PWXRt37SiFV46oLmfyL1Tzs9DZcf2uBan2FPrNjgfBTqpvTu9_dw" frameBorder="0" scrolling="auto" allowFullScreen style={{ display: 'block', marginLeft: 'auto', marginRight: 'auto', maxWidth: '100%' }}></iframe>
                     </div>
-                    <Button className="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600">
-                      Subscribe to Newsletter
-                    </Button>
                   </div>
                 </CardContent>
               </Card>
@@ -408,7 +454,6 @@ function App() {
           </div>
         </div>
       </section>
-
       {/* Footer */}
       <footer className="bg-black/20 backdrop-blur-sm border-t border-white/10 py-12 px-4">
         <div className="container mx-auto text-center">
@@ -418,11 +463,9 @@ function App() {
               Eduvance Tutors
             </span>
           </div>
-          <p className="text-gray-400">2024 Eduvance Tutors. All rights reserved.</p>
+          <p className="text-gray-400">2025 Eduvance Tutors. All rights reserved.</p>
         </div>
       </footer>
     </div>
   )
 }
-
-export default App
